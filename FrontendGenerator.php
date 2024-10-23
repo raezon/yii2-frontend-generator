@@ -50,20 +50,21 @@ class FrontendGenerator extends Generator
     public function generate()
     {
         $files = [];
-        $viewPath = \Yii::$app->getViewPath();
-        $templatePath = $this->getTemplatePath() . '/view.php';
+        $viewPath = \Yii::$app->getViewPath(); // Correctly get the view path
+        $templatePath = $this->getTemplatePath() . '/view.php'; // Get the full path to the template
 
         // Check if the template exists
         if (!file_exists($templatePath)) {
             throw new InvalidArgumentException("Template file does not exist: {$templatePath}");
         }
 
+        // Create the new view file
         $files[] = new \yii\gii\CodeFile(
             $viewPath . '/' . $this->viewName . '.php',
-            $this->render($templatePath)
+            $this->render($templatePath) // Render the template content
         );
 
-        return $files;
+        return $files; // Return the generated files
     }
 
     public function getTemplatePath()
