@@ -1,6 +1,5 @@
 <?php
-echo "<?php\n";
-?>
+
 
 use yii\helpers\Html;
 
