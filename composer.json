@@ -1,5 +1,5 @@
 {
-    "name": "yii2-frontend-generator/yii2-frontend-generator",
+    "name": "yii2/frontend-generator",
     "description": "This extension will help for the creation of severall frontend crud, templates, ui component using react,vue,angular",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
