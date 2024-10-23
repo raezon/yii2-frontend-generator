@@ -9,7 +9,7 @@ use yii\base\InvalidArgumentException;
 class FrontendGenerator extends Generator
 {
     public $viewName = 'hello-world';   // Name of the view file to be generated
-    public $templateName = 'default';    // Name of the template to use
+    public $templateName = '';    // Name of the template to use
 
     public function getName()
     {
@@ -69,6 +69,6 @@ class FrontendGenerator extends Generator
 
     public function getTemplatePath()
     {
-        return \Yii::getAlias('@app/modules/ui/generator/' . $this->templateName);
+        return \Yii::getAlias('@app/modules/ui/generator/default/' . $this->templateName);
     }
 }
