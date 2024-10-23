@@ -69,6 +69,6 @@ class FrontendGenerator extends Generator
 
     public function getTemplatePath()
     {
-        return \Yii::getAlias('@app/modules/ui/generator/default/' . $this->templateName);
+        return \Yii::getAlias('@app/modules/ui/generator/' . $this->templateName);
     }
 }
