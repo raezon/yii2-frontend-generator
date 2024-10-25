@@ -22,6 +22,13 @@ use yii\widgets\ActiveForm;
         'angular' => 'Angular',
     ], ['prompt' => 'Select Framework']) ?>
 
+    <?= $form->field($generator, 'model')->dropDownList([
+        'product' => 'Product',
+        'user' => 'User',
+        'cart' => 'Cart',
+        'other' => 'Other',
+    ], ['prompt' => 'Select Model']) ?>
+
     <?= $form->field($generator, 'enableI18N')->checkbox() ?>
 
     <?= $form->field($generator, 'messageCategory')->textInput(['maxlength' => true]) ?>
