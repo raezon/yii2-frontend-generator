@@ -78,7 +78,7 @@ class FrontendGenerator extends Generator
         }
 
         $frameworkStrategy = FrameworkFactory::create($this->framework);
-        
+
         // Check if all required methods exist
         $requiredMethods = ['runCommand', 'generateListComponent', 'generateCreateComponent', 'generateUpdateComponent', 'generateDeleteComponent', 'generateMainComponent', 'getFileExtension', 'updateRouting'];
         foreach ($requiredMethods as $method) {
@@ -118,17 +118,27 @@ class FrontendGenerator extends Generator
         foreach ($crudComponents as $name => $content) {
             $fileName = $componentPath . '/' . $this->model . $name . '.' . $frameworkStrategy->getFileExtension();
             $files[] = new \yii\gii\CodeFile($fileName, $content);
+
+            // Write the file immediately and log the progress
+            if (file_put_contents($fileName, $content) !== false) {
+                Yii::info("Component {$this->model}{$name} created successfully at {$fileName}", __METHOD__);
+                echo "Component {$this->model}{$name} created successfully.\n";
+            } else {
+                Yii::error("Failed to create component {$this->model}{$name} at {$fileName}", __METHOD__);
+                echo "Failed to create component {$this->model}{$name}.\n";
+            }
         }
 
         // Update routing
         $routeFiles = $frameworkStrategy->updateRouting($projectPath, $this->model);
         if (is_array($routeFiles)) {
             $files = array_merge($files, $routeFiles);
-        } elseif ($routeFiles instanceof CodeFile) {
+        } elseif ($routeFiles instanceof \yii\gii\CodeFile) {
             $files[] = $routeFiles;
         }
 
         Yii::info("Total files generated or updated: " . count($files), __METHOD__);
+        echo "Total files generated or updated: " . count($files) . "\n";
 
         return $files;
     }
