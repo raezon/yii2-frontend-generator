@@ -546,26 +546,27 @@ VUE;
 
   private function generateRouteForModel($model)
   {
+
     $lowerModel = strtolower($model);
     return [
       'path' => '/' . $lowerModel,
       'name' => $lowerModel,
-      'component' => "{$model}Main",
+      'component' => "import('@/components/{$lowerModel}/{$model}Main.vue')",
       'children' => [
         [
           'path' => '',
           'name' => "{$lowerModel}List",
-          'component' => "() => import('@/components/{$lowerModel}/{$model}List.vue')"
+          'component' => "import('@/components/{$lowerModel}/{$model}List.vue')"
         ],
         [
           'path' => 'create',
           'name' => "{$lowerModel}Create",
-          'component' => "() => import('@/components/{$lowerModel}/{$model}Create.vue')"
+          'component' => "import('@/components/{$lowerModel}/{$model}Create.vue')"
         ],
         [
           'path' => 'update/:id',
           'name' => "{$lowerModel}Update",
-          'component' => "() => import('@/components/{$lowerModel}/{$model}Update.vue')"
+          'component' => "import('@/components/{$lowerModel}/{$model}Update.vue')"
         ],
         [
           'path' => 'delete/:id',
@@ -581,15 +582,20 @@ VUE;
     $imports = "import { createRouter, createWebHistory } from 'vue-router'\n";
     $routeDefinitions = "";
 
+
     foreach ($routes as $route) {
 
-      $imports .= "import {$route['component']} from '@/components/{$route['name']}/{$route['component']}.vue'\n";
+      //$imports .= " {$route['component']}";
       /*foreach ($route['children'] as $child) {
 
         $imports .= "import {$child['component']} from '@/components/{$child['name']}/{$child['component']}.vue'\n";
       }*/
+
       $routeDefinitions .= $this->generateRouteDefinition($route);
     }
+
+
+
 
     return <<<JS
 $imports
@@ -618,7 +624,7 @@ JS;
       {
         path: '{$child['path']}',
         name: '{$child['name']}',
-        component: () => import('@/components/{$route['name']}/{$child['component']}.vue')
+        component: () => {$child['component']}
       },\n
 JS;
       }
